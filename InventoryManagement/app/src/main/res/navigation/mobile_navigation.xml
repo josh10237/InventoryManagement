@@ -6,16 +6,16 @@
     app:startDestination="@+id/navigation_add_product">
 
     <fragment
-        android:id="@+id/navigation_outgoing"
+        android:id="@+id/navigation_add_product"
         android:name="com.example.inventorymanagement.ui.add_product.AddProductFragment"
         android:label="Outgoing"
-        tools:layout="@layout/fragment_outgoing" />
+        tools:layout="@layout/fragment_add_product" />
 
     <fragment
-        android:id="@+id/navigation_add_product"
+        android:id="@+id/navigation_outgoing"
         android:name="com.example.inventorymanagement.ui.outgoing.OutgoingFragment"
         android:label="Add"
-        tools:layout="@layout/fragment_add_product" />
+        tools:layout="@layout/fragment_outgoing" />
 
     <fragment
         android:id="@+id/navigation_search"

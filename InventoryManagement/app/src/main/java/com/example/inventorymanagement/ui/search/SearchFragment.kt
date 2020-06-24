@@ -20,12 +20,12 @@ class SearchFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         searchViewModel =
-                ViewModelProviders.of(this).get(SearchViewModel::class.java)
+            ViewModelProviders.of(this).get(SearchViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_search, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        searchViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        //val textView: TextView = root.findViewById(R.id.t)
+        //searchViewModel.text.observe(viewLifecycleOwner, Observer {
+        //    textView.text = it
+        //})
         return root
     }
 }

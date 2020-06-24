@@ -5,7 +5,7 @@
     android:id="@+id/t_add_product"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.outgoing.OutgoingFragment">
+    tools:context=".ui.add_product.AddProductFragment">
 
     <EditText
         android:id="@+id/editTextNumber2"
@@ -23,7 +23,6 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:text="Add Product"
         android:textColor="#6C6C6C"
         android:textSize="24sp"
@@ -36,22 +35,23 @@
         android:id="@+id/imageView"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:src="@drawable/product_triangle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/et_tracking_number"
         android:layout_width="275dp"
         android:layout_height="45dp"
+        android:layout_marginTop="125dp"
         android:ems="10"
         android:hint="Tracking Number"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="542dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
@@ -61,27 +61,27 @@
         android:ems="10"
         android:hint="Product Name"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/editTextNumber"
-        app:layout_constraintStart_toStartOf="@+id/editTextNumber"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+        app:layout_constraintEnd_toEndOf="@+id/et_tracking_number"
+        app:layout_constraintStart_toStartOf="@+id/et_tracking_number"
+        app:layout_constraintTop_toBottomOf="@+id/et_tracking_number" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginTop="15dp"
         android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextNumber2"
         app:layout_constraintStart_toStartOf="@+id/editTextNumber2"
         app:layout_constraintTop_toBottomOf="@+id/editTextNumber2" />
 
     <Button
         android:id="@+id/scanBtn"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Scan Product"
+        app:layout_constraintBottom_toTopOf="@+id/et_tracking_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="320dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
