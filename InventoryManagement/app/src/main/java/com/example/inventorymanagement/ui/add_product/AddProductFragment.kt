@@ -1,4 +1,4 @@
-package com.example.inventorymanagement.ui.notifications
+package com.example.inventorymanagement.ui.add_product
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.inventorymanagement.R
 
-class NotificationsFragment : Fragment() {
+class AddProductFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private lateinit var addProductModel: AddProductModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
+        addProductModel =
+                ViewModelProviders.of(this).get(AddProductModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_outgoing, container, false)
+        val textView: TextView = root.findViewById(R.id.t_outgoing)
+        addProductModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
