@@ -75,10 +75,7 @@ class AddProductFragment : Fragment() {
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
                 }
-
         }
-
-
         return root
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
