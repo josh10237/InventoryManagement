@@ -24,37 +24,31 @@
         android:layout_width="347dp"
         android:layout_height="41dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:ems="10"
-        android:hint="product name or tracking number"
+        android:hint="🔍 Product or Tracking #"
         android:inputType="textPersonName"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <ImageButton
-        android:id="@+id/searchBtn"
-        android:layout_width="46dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="10dp"
-        android:src="@android:drawable/ic_menu_search"
-        app:layout_constraintBottom_toBottomOf="@+id/search_bar"
-        app:layout_constraintEnd_toStartOf="@+id/search_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/search_bar" />
-
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="600dp"
+        android:layout_width="392dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/search_bar"
-        app:layout_constraintStart_toStartOf="@+id/searchBtn"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_bar">
 
         <LinearLayout
             android:id="@+id/lin_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
         </LinearLayout>
     </ScrollView>

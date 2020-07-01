@@ -58,19 +58,22 @@ class AddProductFragment : Fragment() {
             val currentDT = LocalDateTime.now()
             println(product_name + product_tracking_number + product_quantity)
             val db = Firebase.firestore
+            val history = hashMapOf(
+                "created_at" to currentDT
+            )
             val newProduct = hashMapOf(
                 "name" to product_name,
-                "notes" to "null",
+                "notes" to "No notes",
                 "quantity" to product_quantity,
                 "tracking_id" to product_tracking_number,
-                "created_at" to currentDT
+                "units" to "Units",
+                "history" to history
             )
             println("Created Product")
             println(newProduct)
-            db.collection("products")
-                .add(newProduct)
+            db.collection("products").document(product_tracking_number).set(newProduct)
                 .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                    //Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error adding document", e)
