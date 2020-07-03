@@ -93,12 +93,12 @@ class SearchFragment : Fragment() {
         button_dynamic.text = str
         // add Button to LinearLayout
         button_dynamic.setOnClickListener {
-            goToProductPage(t_id, name, quantity)
+            goToProductPage(t_id, name)
         }
         ll.addView(button_dynamic)
 
     }
-    fun goToProductPage(tracking: String, product_name: String, quantity: String){
+    fun goToProductPage(tracking: String, product_name: String){
         val intent = Intent(activity, ProductPageActivity::class.java)
         intent.putExtra("id", tracking)
         intent.putExtra("name", product_name)
