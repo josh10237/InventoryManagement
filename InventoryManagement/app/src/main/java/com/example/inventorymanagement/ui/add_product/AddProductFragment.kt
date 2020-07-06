@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -18,6 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.inventorymanagement.R
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.zxing.integration.android.IntentIntegrator
@@ -54,30 +56,10 @@ class AddProductFragment : Fragment() {
             var product_name = et_product_name.text.toString()
             et_product_name.getText().clear()
             var product_quantity = et_quantity.text.toString()
-            et_quantity.getText().clear()
             val currentDT = LocalDateTime.now()
-            println(product_name + product_tracking_number + product_quantity)
-            val db = Firebase.firestore
-            val history = hashMapOf(
-                "created_at" to currentDT
-            )
-            val newProduct = hashMapOf(
-                "name" to product_name,
-                "notes" to "No notes",
-                "quantity" to product_quantity,
-                "tracking_id" to product_tracking_number,
-                "units" to "Units",
-                "history" to history
-            )
-            println("Created Product")
-            println(newProduct)
-            db.collection("products").document(product_tracking_number).set(newProduct)
-                .addOnSuccessListener { documentReference ->
-                    //Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                }
+            queryDatabase(product_name, product_quantity, product_tracking_number, currentDT)
+            et_quantity.getText().clear()
+            error_info_ap.text = ""
         }
         return root
     }
@@ -96,5 +78,74 @@ class AddProductFragment : Fragment() {
                 super.onActivityResult(requestCode, resultCode, data)
             }
         }
+    }
+    fun queryDatabase(product_name: String, product_quantity: String, product_tracking_number: String, currentDT: Any){
+        val db = Firebase.firestore
+        var called = false
+        db.collection("products")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if (product_tracking_number == document["tracking_id"]) {
+                        if (product_name == document["name"]){
+                            var current_q = document["quantity"].toString()
+                            println("Current")
+                            println(current_q)
+                            println("Add")
+                            println(product_quantity)
+                            var new_q = current_q.toIntOrNull()?.plus(product_quantity.toInt())
+                            var final_q = new_q.toString()
+                            println("New")
+                            println(final_q)
+                            var data = hashMapOf("quantity" to final_q)
+                            db.collection("products").document(product_tracking_number)
+                                .set(data, SetOptions.merge())
+                            called = true
+                        }
+                        else{
+                            error_info_ap.text = "Name and ID do not match"
+                        }
+                    }
+                }
+                if (!called){
+                    addProduct(product_name, product_quantity, product_tracking_number, currentDT)
+                }
+            }
+    }
+    fun addProduct(product_name: String, product_quantity: String, product_tracking_number: String, currentDT: Any){
+        val db = Firebase.firestore
+        val history = hashMapOf(
+            "created_at" to currentDT
+        )
+        val newProduct = hashMapOf(
+            "name" to product_name,
+            "notes" to "No notes",
+            "quantity" to product_quantity,
+            "tracking_id" to product_tracking_number,
+            "units" to "Units",
+            "history" to history
+        )
+        println("Created Product")
+        println(newProduct)
+        db.collection("products").document(product_tracking_number).set(newProduct)
+            .addOnSuccessListener { documentReference ->
+                //Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+    }
+
+    fun increment(product_name: String, product_quantity: String, product_tracking_number: String){
+        val db = Firebase.firestore
+        db.collection("products")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if (product_tracking_number == document["tracking_id"]) {
+
+                    }
+                }
+            }
     }
 }

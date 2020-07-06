@@ -84,4 +84,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/error_info_ap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#D10000"
+        app:layout_constraintBottom_toTopOf="@+id/et_tracking_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scanBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
