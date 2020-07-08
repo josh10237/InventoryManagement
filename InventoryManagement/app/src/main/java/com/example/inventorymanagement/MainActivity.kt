@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,8 +20,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        val username = intent.extras!!.getString("username", "Error")
-        updateAppBar(username)
+        try {
+            val username = intent.extras!!.getString("username", "Error")
+            updateAppBar(username)
+        }catch (e: Exception){
+            print(e)
+        }
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

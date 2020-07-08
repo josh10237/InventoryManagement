@@ -74,13 +74,13 @@ class SearchFragment : Fragment() {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     mapData(document["name"] as String, document["tracking_id"] as String,
-                        document["quantity"] as String, linlay as LinearLayout
+                        document["quantity"] as String, document["units"] as String, linlay as LinearLayout
                     )
 
                 }
             }
         }
-    fun mapData(name: String, t_id: String, quantity: String, ll: LinearLayout) {
+    fun mapData(name: String, t_id: String, quantity: String, units: String, ll: LinearLayout) {
         println(name)
         println(t_id)
         println(quantity)
@@ -93,15 +93,17 @@ class SearchFragment : Fragment() {
         button_dynamic.text = str
         // add Button to LinearLayout
         button_dynamic.setOnClickListener {
-            goToProductPage(t_id, name)
+            goToProductPage(t_id, name, quantity, units)
         }
         ll.addView(button_dynamic)
 
     }
-    fun goToProductPage(tracking: String, product_name: String){
+    fun goToProductPage(tracking: String, product_name: String, quantity: String, units: String){
         val intent = Intent(activity, ProductPageActivity::class.java)
         intent.putExtra("id", tracking)
         intent.putExtra("name", product_name)
+        intent.putExtra("quantity", quantity)
+        intent.putExtra("units", units)
         startActivity(intent)
     }
 

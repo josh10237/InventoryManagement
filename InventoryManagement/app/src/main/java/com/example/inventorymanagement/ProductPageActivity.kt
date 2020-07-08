@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.inventorymanagement.ui.search.SearchFragment
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
@@ -46,6 +47,13 @@ class ProductPageActivity : AppCompatActivity() {
 
         back_button.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            //intent.putExtra("username", user)
+            startActivity(intent)
+        }
+        edit_units.setOnClickListener{
+            val intent = Intent(this, EditQuantityActivity::class.java)
+            intent.putExtra("id", id)
+            intent.putExtra("name", name)
             startActivity(intent)
         }
     }
@@ -70,9 +78,11 @@ class ProductPageActivity : AppCompatActivity() {
                 }
             }
     }
+
     fun mapData(n: String, q: String, u: String, h: HashMap<*, *>) {
         notes.setText(n)
-        quantity.text = "x" + q + " " + u
+        println("x$q $u")
+        quantity.text = "x$q $u"
     }
 }
 
