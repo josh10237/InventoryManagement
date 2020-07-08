@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                 println(result["full_name"])
                 val name = result["full_name"]
                 val role = result["role"]
+                MyApplication.Companion.role = role.toString()
                 var str = (Html.fromHtml("\uD83D\uDC64    "+"<b>" + name + "</b>" +
                         "<br />" +"<small>" + "<i>" + role + "</i>" + "</small>" + "<br />"));
                 getSupportActionBar()?.setTitle(str)

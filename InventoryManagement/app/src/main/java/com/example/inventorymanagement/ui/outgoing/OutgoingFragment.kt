@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.inventorymanagement.MyApplication
 import com.example.inventorymanagement.R
+import kotlinx.android.synthetic.main.fragment_outgoing.*
 
 class OutgoingFragment : Fragment() {
 
@@ -20,10 +25,14 @@ class OutgoingFragment : Fragment() {
         outgoingViewModel =
                 ViewModelProviders.of(this).get(OutgoingViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_outgoing, container, false)
-        //val textView: TextView = root.findViewById(R.id.t_outgoing)
-        //outgoingViewModel.text.observe(viewLifecycleOwner, Observer {
-            //textView.text = it
-        //})
+        val role = MyApplication.Companion.role
+        val ao = root.findViewById<ImageButton>(R.id.add_order)
+        if (role == "Associate"){
+            ao.setVisibility(View.INVISIBLE)
+        }
+
+
+
         return root
     }
 }

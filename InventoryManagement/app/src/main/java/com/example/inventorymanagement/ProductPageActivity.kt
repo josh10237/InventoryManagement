@@ -14,6 +14,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_outgoing.*
 import kotlinx.android.synthetic.main.product_page.*
 
 class ProductPageActivity : AppCompatActivity() {
@@ -28,6 +29,9 @@ class ProductPageActivity : AppCompatActivity() {
         save_notes.setVisibility(View.INVISIBLE)
         notes.setTypeface(null, Typeface.ITALIC)
         updateFromServer(id)
+        if (MyApplication.Companion.role == "Associate"){
+            add_order1.setVisibility(View.INVISIBLE)
+        }
 
         edit_notes.setOnClickListener {
             notes.isEnabled = true
