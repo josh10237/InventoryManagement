@@ -14,6 +14,7 @@ import com.google.firebase.ktx.Firebase
 import java.lang.Exception
 
 
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +23,11 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         try {
             val username = intent.extras!!.getString("username", "Error")
+            MyApplication.Companion.username = username
             updateAppBar(username)
         }catch (e: Exception){
             print(e)
+            updateAppBar(MyApplication.Companion.username)
         }
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
