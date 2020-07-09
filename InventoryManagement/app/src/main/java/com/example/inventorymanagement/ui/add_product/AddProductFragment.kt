@@ -24,6 +24,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_add_product.*
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 class AddProductFragment : Fragment() {
@@ -117,13 +118,17 @@ class AddProductFragment : Fragment() {
         val history = hashMapOf(
             "created_at" to currentDT
         )
+        val outgoing = hashMapOf(
+            "created_at" to null
+        )
         val newProduct = hashMapOf(
             "name" to product_name,
             "notes" to "No notes",
             "quantity" to product_quantity,
             "tracking_id" to product_tracking_number,
             "units" to "Units",
-            "history" to history
+            "history" to history,
+            "outgoing" to outgoing
         )
         println("Created Product")
         println(newProduct)

@@ -1,5 +1,6 @@
 package com.example.inventorymanagement.ui.outgoing
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,11 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.inventorymanagement.CreateOrderActivity
 import com.example.inventorymanagement.MyApplication
 import com.example.inventorymanagement.R
 import kotlinx.android.synthetic.main.fragment_outgoing.*
+import kotlinx.android.synthetic.main.product_page.*
 
 class OutgoingFragment : Fragment() {
 
@@ -31,7 +34,10 @@ class OutgoingFragment : Fragment() {
             ao.setVisibility(View.INVISIBLE)
         }
 
-
+        ao.setOnClickListener {
+            val intent = Intent(activity, CreateOrderActivity::class.java)
+            startActivity(intent)
+        }
 
         return root
     }

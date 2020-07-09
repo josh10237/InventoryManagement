@@ -40,6 +40,13 @@ class ProductPageActivity : AppCompatActivity() {
             save_notes.setVisibility(View.VISIBLE);
         }
 
+        add_order1.setOnClickListener {
+            val intent = Intent(this, CreateOrderActivity::class.java)
+            intent.putExtra("id", id)
+            intent.putExtra("name", name)
+            startActivity(intent)
+        }
+
         save_notes.setOnClickListener {
             val n = notes.text.toString()
             notes.isEnabled = false

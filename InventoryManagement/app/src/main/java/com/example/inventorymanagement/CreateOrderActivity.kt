@@ -1,92 +1,100 @@
 package com.example.inventorymanagement
 
 import android.content.Intent
-import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.new_outgoing_order_activitiy.*
 import kotlinx.android.synthetic.main.product_page.*
-import kotlinx.android.synthetic.main.product_page.p_name
-import kotlinx.android.synthetic.main.quantity_editor.*
 import java.lang.Exception
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class CreateOrderActivity : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_outgoing_order_activitiy)
         try {
-            val username = intent.extras!!.getString("product_name", "Error")
+            val p_id = intent.extras!!.getString("id", "Error")
+            tnum_edit.setText(p_id.toString())
         }catch (e: Exception) {
             print(e)
             print("Not passed")
         }
+        back_button1.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            //intent.putExtra("username", user)
+            startActivity(intent)
+        }
 
-//        q_edit.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {
-//                subbtn.text = "Save"
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-//        })
-//
-//        u_edit.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {
-//                subbtn.text = "Save"
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-//        })
-//
-//
-//        subbtn.setOnClickListener {
-//            if (subbtn.text == "Save"){
-//                updateServer(id)
-//            }
-//            val intent = Intent(this, ProductPageActivity::class.java)
-//            intent.putExtra("id", id)
-//            intent.putExtra("name", name)
-//            intent.putExtra("id", id)
-//            intent.putExtra("name", name)
-//            startActivity(intent)
-//        }
+        subbtn3.setOnClickListener {
+            updateServer()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
-//    fun updateServer(t_id: String){
-//        val units = u_edit.text.toString()
-//        val quantity = q_edit.text.toString()
-//        val data = hashMapOf(
-//            "units" to units,
-//            "quantity" to quantity
-//        )
-//        val db = Firebase.firestore
-//        db.collection("products").document(t_id)
-//            .set(data, SetOptions.merge())
-//    }
-//
-//    fun updateFromServer(t_id: String) {
-//        val db = Firebase.firestore
-//        db.collection("products")
-//            .whereEqualTo("tracking_id", t_id)
-//            .get()
-//            .addOnSuccessListener { result ->
-//                for (document in result) {
-//                    mapData( document["quantity"] as String, document["units"] as String)
-//
-//                }
-//            }
-//    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updateServer() {
+        val tracking = tnum_edit.text.toString()
+        val quantity = editTextNumber2.text.toString()
+        val address = editTextTextPostalAddress.text.toString()
+        var date = editTextDate.text.toString()
+        print("DATE")
+        print(date)
+        try {
+            var fdate = LocalDateTime.parse(
+                "$date 12:00 PM", DateTimeFormatter.ofLocalizedDateTime(
+                    FormatStyle.SHORT
+                )
+            )
+            print("FDATE")
+            println(fdate)
+            val out = hashMapOf(
+                "quantity" to quantity,
+                "adress" to address,
+                "date" to fdate
+            )
+            updateFromServer(tracking, out)
+        } catch (e: Exception) {
+
+            var fdate = LocalDateTime.now()
+            val out = hashMapOf(
+                "quantity" to quantity,
+                "adress" to address,
+                "date" to fdate
+            )
+            updateFromServer(tracking, out)
+        }
+    }
+
+
+    fun updateFromServer(t_id: String, out: Any){
+        val db = Firebase.firestore
+        val randomKey = java.util.UUID.randomUUID().toString()
+        db.collection("products")
+            .whereEqualTo("tracking_id", t_id)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) { //only runs once
+                    val o_map = document["outgoing"]
+                    var finalHashMap : HashMap<String, HashMap<*,*>> = o_map as HashMap<String, HashMap<*, *>>
+                    finalHashMap.put(randomKey, out as java.util.HashMap<*, *>)
+//                    println(finalHashMap)
+                    println("DATA1______")
+                    var data = hashMapOf("outgoing" to finalHashMap)
+                    println(data)
+                    println("______1DATA")
+                    db.collection("products").document(t_id)
+                        .set(data, SetOptions.merge())
+                }
+            }
+    }
 //
 //    fun mapData(q: String, u: String) {
 //        q_edit.setText(q)
