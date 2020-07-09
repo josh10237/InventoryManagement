@@ -30,19 +30,6 @@
         app:layout_constraintTop_toBottomOf="@+id/q_e_title8" />
 
     <TextView
-        android:id="@+id/q_e_title10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="Shipment Date"
-        android:textColor="#494848"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPostalAddress" />
-
-    <TextView
         android:id="@+id/q_e_title9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,7 +71,7 @@
         android:id="@+id/tnumname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="45dp"
         android:text="Tracking Number"
         android:textColor="#494848"
         android:textSize="24sp"
@@ -97,7 +84,6 @@
         android:id="@+id/subbtn3"
         android:layout_width="104dp"
         android:layout_height="46dp"
-        android:layout_marginTop="25dp"
         android:background="#43FFFFFF"
         android:text="Submit"
         android:textColor="#03A9F4"
@@ -105,7 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        tools:layout_editor_absoluteY="534dp" />
 
     <EditText
         android:id="@+id/tnum_edit"
@@ -132,28 +118,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/q_e_title9" />
-
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="mm/dd/yyyy"
-        android:inputType="date"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Leave blank for earliest available time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/q_e_title10" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

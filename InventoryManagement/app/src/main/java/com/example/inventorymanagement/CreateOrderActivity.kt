@@ -44,34 +44,15 @@ class CreateOrderActivity : AppCompatActivity() {
         val tracking = tnum_edit.text.toString()
         val quantity = editTextNumber2.text.toString()
         val address = editTextTextPostalAddress.text.toString()
-        var date = editTextDate.text.toString()
-        print("DATE")
-        print(date)
-        try {
-            var fdate = LocalDateTime.parse(
-                "$date 12:00 PM", DateTimeFormatter.ofLocalizedDateTime(
-                    FormatStyle.SHORT
-                )
-            )
-            print("FDATE")
-            println(fdate)
-            val out = hashMapOf(
-                "quantity" to quantity,
-                "adress" to address,
-                "date" to fdate
-            )
-            updateFromServer(tracking, out)
-        } catch (e: Exception) {
-
-            var fdate = LocalDateTime.now()
-            val out = hashMapOf(
-                "quantity" to quantity,
-                "adress" to address,
-                "date" to fdate
-            )
-            updateFromServer(tracking, out)
-        }
+        val fdate = LocalDateTime.now()
+        val out = hashMapOf(
+            "quantity" to quantity,
+            "adress" to address,
+            "date" to fdate
+        )
+        updateFromServer(tracking, out)
     }
+}
 
 
     fun updateFromServer(t_id: String, out: Any){
@@ -85,20 +66,9 @@ class CreateOrderActivity : AppCompatActivity() {
                     val o_map = document["outgoing"]
                     var finalHashMap : HashMap<String, HashMap<*,*>> = o_map as HashMap<String, HashMap<*, *>>
                     finalHashMap.put(randomKey, out as java.util.HashMap<*, *>)
-//                    println(finalHashMap)
-                    println("DATA1______")
                     var data = hashMapOf("outgoing" to finalHashMap)
-                    println(data)
-                    println("______1DATA")
                     db.collection("products").document(t_id)
                         .set(data, SetOptions.merge())
                 }
             }
     }
-//
-//    fun mapData(q: String, u: String) {
-//        q_edit.setText(q)
-//        u_edit.setText(u)
-//    }
-}
-//
