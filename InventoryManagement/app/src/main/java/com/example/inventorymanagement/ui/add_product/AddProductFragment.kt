@@ -118,9 +118,7 @@ class AddProductFragment : Fragment() {
         val history = hashMapOf(
             "created_at" to currentDT
         )
-        val outgoing = hashMapOf(
-            "created_at" to null
-        )
+        val outgoing = emptyMap<String, Map<String, String>>()
         val newProduct = hashMapOf(
             "name" to product_name,
             "notes" to "No notes",

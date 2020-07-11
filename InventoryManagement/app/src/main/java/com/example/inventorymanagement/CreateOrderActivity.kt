@@ -11,9 +11,13 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.new_outgoing_order_activitiy.*
 import kotlinx.android.synthetic.main.product_page.*
 import java.lang.Exception
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.*
+import kotlin.collections.HashMap
 
 class CreateOrderActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -44,11 +48,12 @@ class CreateOrderActivity : AppCompatActivity() {
         val tracking = tnum_edit.text.toString()
         val quantity = editTextNumber2.text.toString()
         val address = editTextTextPostalAddress.text.toString()
-        val fdate = LocalDateTime.now()
+        val fdate = LocalDate.now()
+        val formatter = DateTimeFormatter.ISO_DATE
         val out = hashMapOf(
             "quantity" to quantity,
-            "adress" to address,
-            "date" to fdate
+            "address" to address,
+            "date" to formatter.format(fdate)
         )
         updateFromServer(tracking, out)
     }

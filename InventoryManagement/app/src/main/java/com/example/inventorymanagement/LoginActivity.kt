@@ -33,10 +33,6 @@ class LoginActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    println("user:")
-                    println(document["username"])
-                    println("pass:")
-                    println(document["password"])
                     if (document["username"] == usr)
                     {
                         if (document["password"] == ps)
