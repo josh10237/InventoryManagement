@@ -19,6 +19,7 @@ import com.example.inventorymanagement.CreateOrderActivity
 import com.example.inventorymanagement.MyApplication
 import com.example.inventorymanagement.ProductPageActivity
 import com.example.inventorymanagement.R
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_outgoing.*
@@ -90,7 +91,7 @@ class OutgoingFragment : Fragment() {
 
             }
     }
-    fun mapData(name: String, t_id: String, quantity: String, units: String, o_quantity: String, o_address: String, o_date: Any, ll: LinearLayout) {
+    fun mapData(name: String, t_id: String, quantity: String, units: String, o_quantity: String, o_address: String, o_date: String, ll: LinearLayout) {
         val button_dynamic = Button(activity)
         button_dynamic.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         button_dynamic.setGravity(Gravity.LEFT or Gravity.START)
@@ -102,6 +103,13 @@ class OutgoingFragment : Fragment() {
         button_dynamic.setOnClickListener {
             goToProductPage(t_id, name, quantity, units)
         }
+        button_dynamic.setOnLongClickListener{
+            val btn1 = button_dynamic as Button
+            btn1.setVisibility(View.GONE)
+            orderComplete(t_id, name, quantity, units, o_quantity, o_address, o_date)
+            return@setOnLongClickListener true
+        }
+
         ll.addView(button_dynamic)
 
     }
@@ -113,5 +121,51 @@ class OutgoingFragment : Fragment() {
         intent.putExtra("units", units)
         startActivity(intent)
     }
+    fun orderComplete(tracking1: String, product_name1: String, quantity1: String, units1: String, o_quantity1: String, o_address1: String, o_date1: String){
+        println("LONG CLICKED BUTTON")
+        info_error_txt.text = ""
+        val db = Firebase.firestore
+        db.collection("products")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val name = document["name"] as String
+                    val tracking_id = document["tracking_id"] as String
+                    val quantity = document["quantity"] as String
+                    val units = document["units"] as String
+                    val outgoing = document["outgoing"] as java.util.HashMap<*, *>
+                    for ((k, v) in outgoing) {
+                        val key = k as String
+                        val items = v as HashMap<String, String>
+                        val o_address = items["address"] as String
+                        val o_date = items["date"] as String
+                        val o_quantity = items["quantity"] as String
+                        // If same document
+                        if (o_quantity == o_quantity1 && o_address == o_address1 && o_date == o_date1 && tracking_id == tracking1){
+                            //Subtract order quantity from total quantity and remerge into database and throw error if negative
+                            var newQuantity = quantity.toInt() - o_quantity1.toInt()
+                            if (newQuantity < 0){
+                                info_error_txt.text = "Order too large. Cannot be filled with current inventory"
+                            }else{
+                                var data = hashMapOf("quantity" to newQuantity.toString())
+                                db.collection("products").document(tracking_id)
+                                    .set(data, SetOptions.merge())
+                                println("CURRENT OUTGOING")
+                                println(outgoing)
+                                outgoing.remove(key)
+                                println("NEW OUTGOING")
+                                println(outgoing)
+//                                var data1 = hashMapOf("outgoing" to newOrderlist)
+//                                db.collection("products").document(tracking_id)
+//                                    .set(data1, SetOptions.merge())
+                            }
+                        }
+                    }
+                }
+            }
+
+
+    }
+
 
 }
