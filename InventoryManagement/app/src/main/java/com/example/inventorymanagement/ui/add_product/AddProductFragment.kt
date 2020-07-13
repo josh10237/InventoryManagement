@@ -115,9 +115,6 @@ class AddProductFragment : Fragment() {
     }
     fun addProduct(product_name: String, product_quantity: String, product_tracking_number: String, currentDT: Any){
         val db = Firebase.firestore
-        val history = hashMapOf(
-            "created_at" to currentDT
-        )
         val outgoing = emptyMap<String, Map<String, String>>()
         val newProduct = hashMapOf(
             "name" to product_name,
@@ -125,7 +122,6 @@ class AddProductFragment : Fragment() {
             "quantity" to product_quantity,
             "tracking_id" to product_tracking_number,
             "units" to "Units",
-            "history" to history,
             "outgoing" to outgoing
         )
         println("Created Product")

@@ -83,14 +83,14 @@ class ProductPageActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     mapData(document["notes"] as String, document["quantity"] as String,
-                        document["units"] as String, document["history"] as HashMap<*, *>
+                        document["units"] as String
                     )
 
                 }
             }
     }
 
-    fun mapData(n: String, q: String, u: String, h: HashMap<*, *>) {
+    fun mapData(n: String, q: String, u: String) {
         notes.setText(n)
         println("x$q $u")
         quantity.text = "x$q $u"

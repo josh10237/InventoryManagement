@@ -31,27 +31,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/product_triangle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_1" />
-
     <EditText
         android:id="@+id/et_tracking_number"
         android:layout_width="275dp"
         android:layout_height="45dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="250dp"
         android:ems="10"
         android:hint="Tracking Number"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_1" />
 
     <EditText
         android:id="@+id/et_product_name"
@@ -80,18 +70,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Scan Product"
-        app:layout_constraintBottom_toTopOf="@+id/et_tracking_number"
+        app:layout_constraintBottom_toTopOf="@+id/error_info_ap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_1" />
 
     <TextView
         android:id="@+id/error_info_ap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:textColor="#D10000"
         app:layout_constraintBottom_toTopOf="@+id/et_tracking_number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanBtn" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

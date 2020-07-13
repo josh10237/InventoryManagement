@@ -33,7 +33,7 @@
         android:id="@+id/username"
         android:layout_width="263dp"
         android:layout_height="49dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="username"
         android:inputType="textPersonName"

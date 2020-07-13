@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.inventorymanagement.CreateOrderActivity
 import com.example.inventorymanagement.MyApplication
+import com.example.inventorymanagement.MyApplication.Companion.rebuildMap
 import com.example.inventorymanagement.ProductPageActivity
 import com.example.inventorymanagement.R
 import com.google.firebase.firestore.SetOptions
@@ -123,47 +124,58 @@ class OutgoingFragment : Fragment() {
     }
     fun orderComplete(tracking1: String, product_name1: String, quantity1: String, units1: String, o_quantity1: String, o_address1: String, o_date1: String){
         println("LONG CLICKED BUTTON")
+//        var rebuildMap = HashMap<String, Map<String, String>>()
+        rebuildMap.clear()
         info_error_txt.text = ""
         val db = Firebase.firestore
         db.collection("products")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val name = document["name"] as String
                     val tracking_id = document["tracking_id"] as String
                     val quantity = document["quantity"] as String
-                    val units = document["units"] as String
                     val outgoing = document["outgoing"] as java.util.HashMap<*, *>
-                    for ((k, v) in outgoing) {
-                        val key = k as String
-                        val items = v as HashMap<String, String>
-                        val o_address = items["address"] as String
-                        val o_date = items["date"] as String
-                        val o_quantity = items["quantity"] as String
-                        // If same document
-                        if (o_quantity == o_quantity1 && o_address == o_address1 && o_date == o_date1 && tracking_id == tracking1){
-                            //Subtract order quantity from total quantity and remerge into database and throw error if negative
-                            var newQuantity = quantity.toInt() - o_quantity1.toInt()
-                            if (newQuantity < 0){
-                                info_error_txt.text = "Order too large. Cannot be filled with current inventory"
+                    //if correct product
+                    if(tracking_id == tracking1){
+                        println("FOUND PRODUCT")
+                        for ((k, v) in outgoing) {
+                            val key = k as String
+                            val items = v as HashMap<String, String>
+                            val o_address = items["address"] as String
+                            val o_date = items["date"] as String
+                            val o_quantity = items["quantity"] as String
+                            // If same order
+                            println(o_address)
+                            println(o_address1)
+                            if (o_quantity == o_quantity1 && o_address == o_address1 && o_date == o_date1){
+                                //Subtract order quantity from total quantity and remerge quantity into database and throw error if negative
+                                println("REMOVED")
+                                println(key)
+                                var newQuantity = quantity.toInt() - o_quantity1.toInt()
+                                if (newQuantity < 0){
+                                    info_error_txt.text = "Order too large. Cannot be filled with current inventory"
+                                }else{
+                                    var data = hashMapOf("quantity" to newQuantity.toString())
+                                    db.collection("products").document(tracking_id)
+                                        .set(data, SetOptions.merge())
+                                }
                             }else{
-                                var data = hashMapOf("quantity" to newQuantity.toString())
-                                db.collection("products").document(tracking_id)
-                                    .set(data, SetOptions.merge())
-                                println("CURRENT OUTGOING")
-                                println(outgoing)
-                                outgoing.remove(key)
-                                println("NEW OUTGOING")
-                                println(outgoing)
-//                                var data1 = hashMapOf("outgoing" to newOrderlist)
-//                                db.collection("products").document(tracking_id)
-//                                    .set(data1, SetOptions.merge())
+                                rebuildMap.put(key, v)
+                                println("PUT")
+                                println(key)
+                                println("MERGE")
+                                println(rebuildMap)
+                                var data1 = hashMapOf("outgoing" to rebuildMap)
+                                println("DATA1")
+                                println(data1)
+                                //TODO ERROR WHERE ITS NOT REMERGING NEW OUTGOING DATA
+                                db.collection("products").document(tracking1)
+                                    .set(data1, SetOptions.merge())
                             }
                         }
                     }
                 }
             }
-
 
     }
 

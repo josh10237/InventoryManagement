@@ -6,6 +6,7 @@ class MyApplication: Application() {
     companion object {
         var username = "null"
         var role = "null"
+        var rebuildMap = HashMap<String, Map<String, String>>()
     }
 
 
