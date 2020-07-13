@@ -20,6 +20,7 @@ import com.example.inventorymanagement.MyApplication
 import com.example.inventorymanagement.MyApplication.Companion.rebuildMap
 import com.example.inventorymanagement.ProductPageActivity
 import com.example.inventorymanagement.R
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -161,18 +162,16 @@ class OutgoingFragment : Fragment() {
                                 }
                             }else{
                                 rebuildMap.put(key, v)
-                                println("PUT")
-                                println(key)
-                                println("MERGE")
-                                println(rebuildMap)
-                                var data1 = hashMapOf("outgoing" to rebuildMap)
-                                println("DATA1")
-                                println(data1)
-                                //TODO ERROR WHERE ITS NOT REMERGING NEW OUTGOING DATA
-                                db.collection("products").document(tracking1)
-                                    .set(data1, SetOptions.merge())
                             }
                         }
+                        var data1 = hashMapOf("outgoing" to rebuildMap)
+                        //delete outgoing field
+                        val docRef = db.collection("products").document(tracking1)
+                        val updates = hashMapOf<String, Any>("outgoing" to FieldValue.delete())
+                        docRef.update(updates)
+                        //merge in new outgoing map
+                        db.collection("products").document(tracking1)
+                            .set(data1, SetOptions.merge())
                     }
                 }
             }
