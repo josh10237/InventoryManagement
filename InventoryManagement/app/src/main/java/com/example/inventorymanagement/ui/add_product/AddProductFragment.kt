@@ -9,14 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.inventorymanagement.CreateOrderActivity
+import com.example.inventorymanagement.ManageUsersActivity
+import com.example.inventorymanagement.MyApplication
 import com.example.inventorymanagement.R
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -40,15 +40,25 @@ class AddProductFragment : Fragment() {
         addProductModel =
                 ViewModelProviders.of(this).get(AddProductModel::class.java)
         val root = inflater.inflate(R.layout.fragment_add_product, container, false)
-        //val textView: TextView = root.findViewById(R.id.t_outgoing)
+        val role = MyApplication.Companion.role
         val scanProductBtn = root.findViewById<Button>(R.id.scanBtn)
         val submitBtn = root.findViewById<Button>(R.id.submit_button)
-        addProductModel.text.observe(viewLifecycleOwner, Observer {
-            //textView.text = it
-        })
+        val mg = root.findViewById<ImageButton>(R.id.manageusr)
+        println("ROLE")
+        println(role)
+        if (role == "Admin" || role == "admin"){
+            mg.setVisibility(View.VISIBLE)
+        }else{
+            mg.setVisibility(View.INVISIBLE)
+        }
         scanProductBtn.setOnClickListener {
             val scanner = IntentIntegrator(activity)
             scanner.initiateScan()
+        }
+
+        mg.setOnClickListener {
+            val intent = Intent(activity, ManageUsersActivity::class.java)
+            startActivity(intent)
         }
 
         submitBtn.setOnClickListener {

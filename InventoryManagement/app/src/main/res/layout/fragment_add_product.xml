@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.add_product.AddProductFragment">
 
+    <ImageButton
+        android:id="@+id/manageusr"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="15dp"
+        android:background="#00FFFFFF"
+        android:src="@android:drawable/ic_menu_myplaces"
+        android:tint="#2196F3"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
     <EditText
         android:id="@+id/et_quantity"
         android:layout_width="0dp"
