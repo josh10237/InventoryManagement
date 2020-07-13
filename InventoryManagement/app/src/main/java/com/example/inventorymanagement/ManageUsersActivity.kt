@@ -1,5 +1,6 @@
 package com.example.inventorymanagement
 
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -25,6 +26,36 @@ class ManageUsersActivity : AppCompatActivity() {
         back_button2.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        }
+        rmv.setOnClickListener {
+            val db = Firebase.firestore
+            val usr = rmvusrnm.text.toString()
+            rmvusrnm.setText("")
+            db.collection("users").document(usr)
+                .delete()
+        }
+        add.setOnClickListener {
+            val username = usrnm.text.toString()
+            usrnm.setText("")
+            val password = pswrd.text.toString()
+            pswrd.setText("")
+            val full_name = flnm.text.toString()
+            flnm.setText("")
+            val role = rl.text.toString()
+            rl.setText("")
+            val data = hashMapOf(
+                "full_name" to full_name,
+                "username" to username,
+                "password" to password,
+                "role" to role
+            )
+            val db = Firebase.firestore
+            db.collection("users").document(username).set(data)
+                .addOnSuccessListener { documentReference ->
+                }
+                .addOnFailureListener { e ->
+                    Log.w(ContentValues.TAG, "Error adding document", e)
+                }
         }
     }
 }
